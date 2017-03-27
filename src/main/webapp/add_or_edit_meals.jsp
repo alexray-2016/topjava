@@ -15,7 +15,7 @@
 <body>
 <form method="post" action="meals" name="frmAddMeal">
     <c:set var="cleanedDateTime" value="${fn:replace(meal.dateTime, 'T', ' ')}" />
-    Meal ID: <input type="text" readonly="readonly" name="mealId" value="<c:out value="${not empty nextId ? nextId : meal.id}"/>"/><br/>
+    Meal ID: <input type="text" readonly="readonly" name="mealId" value="<c:out value="${not empty meal.id ? meal.id : nextId}"/>"/><br/>
     Date Time: <input type="text" name="dateTime" value="<c:out value="${cleanedDateTime}"/>"/><br/>
     Description: <input type="text" name="description" value="<c:out value="${meal.description}"/>"/><br/>
     Calories: <input type="text" name="calories" value="<c:out value="${meal.calories}"/>"/><br/>

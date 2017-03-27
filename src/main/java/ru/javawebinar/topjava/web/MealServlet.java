@@ -68,16 +68,16 @@ public class MealServlet extends HttpServlet {
         String action = request.getParameter("action");
         nextId = MealsUtil.getAtomicId().get() + 1;
 
-        if (action.equalsIgnoreCase("delete"))
+        if ("delete".equalsIgnoreCase(action))
         {
             int mealId = Integer.parseInt(request.getParameter("mealId"));
             mealService.deleteMeal(mealId);
             forward = LIST_MEAL;
             mealWithExceeds = MealsUtil.getFullMealsWithExceedSortedList(mealService.getAllMeals());
             request.setAttribute("meals", mealWithExceeds);
-            request.getRequestDispatcher(forward).forward(request, response);
+            response.sendRedirect("meals");
         }
-        else if (action.equalsIgnoreCase("edit"))
+        else if ("edit".equalsIgnoreCase(action))
         {
             forward = INSERT_OR_EDIT;
             int mealId = Integer.parseInt(request.getParameter("mealId"));
@@ -85,19 +85,19 @@ public class MealServlet extends HttpServlet {
             request.setAttribute("meal", meal);
             request.getRequestDispatcher(forward).forward(request, response);
         }
-        else if (action.equalsIgnoreCase("meals"))
-        {
-            forward = LIST_MEAL;
-            mealWithExceeds = MealsUtil.getFullMealsWithExceedSortedList(mealService.getAllMeals());
-            request.setAttribute("meals", mealWithExceeds);
-            request.getRequestDispatcher(forward).forward(request, response);
-        }
-        else
+        else if ("insert".equalsIgnoreCase(action))
         {
             //Add operation
             //Setting attribute of new meal ID field
             request.setAttribute("nextId", nextId);
             forward = INSERT_OR_EDIT;
+            request.getRequestDispatcher(forward).forward(request, response);
+        }
+        else
+        {
+            forward = LIST_MEAL;
+            mealWithExceeds = MealsUtil.getFullMealsWithExceedSortedList(mealService.getAllMeals());
+            request.setAttribute("meals", mealWithExceeds);
             request.getRequestDispatcher(forward).forward(request, response);
         }
     }
