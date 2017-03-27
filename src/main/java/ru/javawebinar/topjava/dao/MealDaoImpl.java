@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.util.MealsUtil;
 
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.List;
 
 /**
  * Created by Administrator on 25.03.2017.
@@ -37,7 +37,7 @@ public class MealDaoImpl implements MealDao {
     }
 
     @Override
-    public CopyOnWriteArrayList<Meal> getAllMeals() {
+    public List<Meal> getAllMeals() {
         return MealsUtil.getMeals();
     }
 

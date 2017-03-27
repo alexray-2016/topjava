@@ -3,7 +3,7 @@ package ru.javawebinar.topjava.service;
 import ru.javawebinar.topjava.dao.MealDaoImpl;
 import ru.javawebinar.topjava.model.Meal;
 
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.List;
 
 /**
  * Created by Administrator on 27.03.2017.
@@ -28,7 +28,7 @@ public class MealServiceImpl implements MealService{
     }
 
     @Override
-    public CopyOnWriteArrayList<Meal> getAllMeals() {
+    public List<Meal> getAllMeals() {
         return this.mealDao.getAllMeals();
     }
 

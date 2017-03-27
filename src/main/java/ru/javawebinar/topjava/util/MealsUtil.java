@@ -44,13 +44,13 @@ public class MealsUtil {
         return atomicId;
     }
 
-    private static CopyOnWriteArrayList<Meal> concurrentMeals = new CopyOnWriteArrayList<>(meals);
+    private static List<Meal> concurrentMeals = new CopyOnWriteArrayList<>(meals);
 
-    public static CopyOnWriteArrayList<Meal> getMeals() {
+    public static List<Meal> getMeals() {
         return concurrentMeals;
     }
 
-    public static CopyOnWriteArrayList<MealWithExceed> getFilteredWithExceeded(CopyOnWriteArrayList<Meal> meals, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
+    public static List<MealWithExceed> getFilteredWithExceeded(List<Meal> meals, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
         Map<LocalDate, Integer> caloriesSumByDate = meals.stream()
                 .collect(
                         Collectors.groupingBy(Meal::getDate, Collectors.summingInt(Meal::getCalories))
@@ -69,9 +69,9 @@ public class MealsUtil {
     }
 
     //returns MealWithExceed sorted by date list
-    public static CopyOnWriteArrayList<MealWithExceed> getFullMealsWithExceedSortedList(CopyOnWriteArrayList<Meal> meals)
+    public static List<MealWithExceed> getFullMealsWithExceedSortedList(List<Meal> meals)
     {
-        CopyOnWriteArrayList<MealWithExceed> mealWithExceeds = MealsUtil.getFilteredWithExceeded(meals, LocalTime.of(0, 0), LocalTime.of(23, 59), 2000);
+        List<MealWithExceed> mealWithExceeds = MealsUtil.getFilteredWithExceeded(meals, LocalTime.of(0, 0), LocalTime.of(23, 59), 2000);
         Collections.sort(mealWithExceeds);
         return mealWithExceeds;
     }

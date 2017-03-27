@@ -13,12 +13,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.concurrent.CopyOnWriteArrayList;
-
+import java.util.List;
 
 public class MealServlet extends HttpServlet {
 
-    private static CopyOnWriteArrayList<MealWithExceed> mealWithExceeds;
+    private static List<MealWithExceed> mealWithExceeds;
 
     private static String INSERT_OR_EDIT = "/add_or_edit_meals.jsp";
 
@@ -76,6 +75,7 @@ public class MealServlet extends HttpServlet {
             forward = LIST_MEAL;
             mealWithExceeds = MealsUtil.getFullMealsWithExceedSortedList(mealService.getAllMeals());
             request.setAttribute("meals", mealWithExceeds);
+            request.getRequestDispatcher(forward).forward(request, response);
         }
         else if (action.equalsIgnoreCase("edit"))
         {
@@ -83,12 +83,14 @@ public class MealServlet extends HttpServlet {
             int mealId = Integer.parseInt(request.getParameter("mealId"));
             Meal meal = mealService.getMealById(mealId);
             request.setAttribute("meal", meal);
+            request.getRequestDispatcher(forward).forward(request, response);
         }
         else if (action.equalsIgnoreCase("meals"))
         {
             forward = LIST_MEAL;
             mealWithExceeds = MealsUtil.getFullMealsWithExceedSortedList(mealService.getAllMeals());
             request.setAttribute("meals", mealWithExceeds);
+            request.getRequestDispatcher(forward).forward(request, response);
         }
         else
         {
@@ -96,8 +98,7 @@ public class MealServlet extends HttpServlet {
             //Setting attribute of new meal ID field
             request.setAttribute("nextId", nextId);
             forward = INSERT_OR_EDIT;
+            request.getRequestDispatcher(forward).forward(request, response);
         }
-        //forwarding to meal list or add/edit page
-        request.getRequestDispatcher(forward).forward(request, response);
     }
 }
