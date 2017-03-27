@@ -16,11 +16,11 @@ import static org.slf4j.LoggerFactory.getLogger;
  * Date: 19.08.2014
  */
 public class UserServlet extends HttpServlet {
-    private static final Logger LOG = getLogger(UserServlet.class);
+    static final Logger LOG = getLogger(UserServlet.class);
+
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         LOG.debug("redirect to users");
-
 //        request.getRequestDispatcher("/users.jsp").forward(request, response);
         response.sendRedirect("users.jsp");
     }
