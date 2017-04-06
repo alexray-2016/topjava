@@ -1,5 +1,16 @@
 package ru.javawebinar.topjava;
 
+import ru.javawebinar.topjava.model.Meal;
+import ru.javawebinar.topjava.service.MealService;
+import ru.javawebinar.topjava.service.MealServiceImpl;
+import ru.javawebinar.topjava.to.MealWithExceed;
+import ru.javawebinar.topjava.web.meal.MealRestController;
+
+import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 /**
  * User: gkislin
  * Date: 05.08.2015
@@ -9,6 +20,10 @@ package ru.javawebinar.topjava;
  */
 public class Main {
     public static void main(String[] args) {
-        System.out.format("Hello Topjava Enterprise!");
+        /*String id = "3";
+        Meal meal = new Meal(id.isEmpty() ? null : Integer.valueOf(id),
+                LocalDateTime.parse(request.getParameter("dateTime")),
+                request.getParameter("description"),
+                Integer.valueOf(request.getParameter("calories")));*/
     }
 }
