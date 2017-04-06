@@ -6,6 +6,8 @@ import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.util.DateTimeUtil;
 import ru.javawebinar.topjava.util.MealsUtil;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -66,6 +68,13 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
                 .sorted((o1, o2) -> o2.getDateTime().compareTo(o1.getDateTime()))
                 .collect(Collectors.toList());
         return meals.isEmpty() ? Collections.emptyList() : meals;
+    }
+
+    @Override
+    public Collection<Meal> getBetween(LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime, int userId) {
+        return getAll(userId).stream()
+                .filter(elem -> DateTimeUtil.isBetween(elem.getDate(), startDate, endDate) && DateTimeUtil.isBetween(elem.getTime(), startTime, endTime))
+                .collect(Collectors.toList());
     }
 }
 

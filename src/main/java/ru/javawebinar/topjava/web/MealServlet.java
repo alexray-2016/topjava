@@ -9,6 +9,7 @@ import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.mock.InMemoryMealRepositoryImpl;
 import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.service.MealService;
+import ru.javawebinar.topjava.util.DateTimeUtil;
 import ru.javawebinar.topjava.util.MealsUtil;
 import ru.javawebinar.topjava.web.meal.MealRestController;
 
@@ -18,7 +19,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
@@ -41,15 +44,27 @@ public class MealServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
+        String action = request.getParameter("action");
         String id = request.getParameter("id");
-        Meal meal = new Meal(AuthorizedUser.getId(), id.isEmpty() ? null : Integer.valueOf(id),
-                LocalDateTime.parse(request.getParameter("dateTime")),
-                request.getParameter("description"),
-                Integer.valueOf(request.getParameter("calories")));
+        if (action == null) {
+            Meal meal = new Meal(AuthorizedUser.getId(), id.isEmpty() ? null : Integer.valueOf(id),
+                    LocalDateTime.parse(request.getParameter("dateTime")),
+                    request.getParameter("description"),
+                    Integer.valueOf(request.getParameter("calories")));
 
-        LOG.info(meal.isNew() ? "Create {}" : "Update {}", meal);
-        mealRestController.save(meal);
-        response.sendRedirect("meals");
+            LOG.info(meal.isNew() ? "Create {}" : "Update {}", meal);
+            mealRestController.save(meal);
+            response.sendRedirect("meals");
+        }
+        else
+        {
+            LocalDate startDate = DateTimeUtil.parseLocalDate(request.getParameter("startDate"), LocalDate.MIN);
+            LocalDate endDate = DateTimeUtil.parseLocalDate(request.getParameter("endDate"), LocalDate.MAX);
+            LocalTime startTime = DateTimeUtil.parseLocalTime(request.getParameter("startTime"), LocalTime.MIN);
+            LocalTime endTime = DateTimeUtil.parseLocalTime(request.getParameter("endTime"), LocalTime.MAX);
+            request.setAttribute("meals", mealRestController.getBetween(startDate, endDate, startTime, endTime));
+            request.getRequestDispatcher("/meals.jsp").forward(request, response);
+        }
     }
 
     @Override

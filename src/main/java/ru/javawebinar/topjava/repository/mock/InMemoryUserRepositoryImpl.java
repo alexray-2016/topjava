@@ -62,6 +62,6 @@ public class InMemoryUserRepositoryImpl implements UserRepository {
         LOG.info("getByEmail " + email);
         return repository.values().stream()
                 .filter(elem -> email.equals(elem.getEmail()))
-                .findFirst().get();
+                .findFirst().orElse(null);
     }
 }
