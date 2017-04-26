@@ -1,5 +1,8 @@
 package ru.javawebinar.topjava;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 /**
  * User: gkislin
  * Date: 05.08.2015
@@ -10,5 +13,6 @@ package ru.javawebinar.topjava;
 public class Main {
     public static void main(String[] args) {
         System.out.format("Hello Topjava Enterprise!");
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring/spring-app.xml", "spring/spring-db.xml");
     }
 }
