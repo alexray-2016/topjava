@@ -1,3 +1,14 @@
+    <!--
+        <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource"
+              p:cacheSeconds="60"
+              p:defaultEncoding="UTF-8">
+            <property name="basenames">
+                <list>
+                    <value>messages/app</value>
+                </list>
+            </property>
+        </bean>
+    -->
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
@@ -11,6 +22,14 @@
         <mvc:message-converters>
             <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
                 <property name="objectMapper" ref="objectMapper"/>
+            </bean>
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>text/plain;charset=UTF-8</value>
+                        <value>text/html;charset=UTF-8</value>
+                    </list>
+                </property>
             </bean>
         </mvc:message-converters>
     </mvc:annotation-driven>
