@@ -34,6 +34,26 @@
         </mvc:message-converters>
     </mvc:annotation-driven>
 
+    <!--<bean id="conversionService"
+          class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="formatters">
+            <set>
+                <bean class="org.springframework.format.number.NumberFormatAnnotationFormatterFactory" />
+            </set>
+        </property>
+        <property name="formatterRegistrars">
+            <set>
+                <bean class="org.springframework.format.datetime.joda.JodaTimeFormatterRegistrar">
+                    <property name="dateFormatter">
+                        <bean class="org.springframework.format.datetime.joda.DateTimeFormatterFactoryBean">
+                            <property name="pattern" value="YYYY-MM-dd HH:mm:ss"/>
+                        </bean>
+                    </property>
+                </bean>
+            </set>
+        </property>
+    </bean>-->
+
     <context:component-scan base-package="ru.javawebinar.**.web"/>
 
     <!--  all resources inside folder src/main/webapp/resources are mapped so they can be referred to inside JSP files -->

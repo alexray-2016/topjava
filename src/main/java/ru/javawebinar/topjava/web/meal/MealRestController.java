@@ -3,21 +3,26 @@ package ru.javawebinar.topjava.web.meal;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import net.sf.ehcache.util.TimeUtil;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.datetime.standard.DateTimeFormatterRegistrar;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.to.MealWithExceed;
 
+import javax.persistence.Temporal;
 import java.net.URI;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -73,5 +78,26 @@ public class MealRestController extends AbstractMealController {
         LocalDate endDate = endDateTime.toLocalDate();
         LocalTime endTime = endDateTime.toLocalTime();
         return super.getBetween(startDate, startTime, endDate, endTime);
+    }
+
+    @PostMapping(value = "/filter2", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<MealWithExceed> getBetween(
+            @RequestParam(value = "startDate", required = false) String startDate,
+            @RequestParam(value = "startTime", required = false) String startTime,
+            @RequestParam(value = "endDate", required = false) String endDate,
+            @RequestParam(value = "endTime", required = false) String endTime)
+    {
+        LocalDate startDateParsed, endDateParsed;
+        LocalTime startTimeParsed, endTimeParsed;
+        try {startDateParsed = StringUtils.isEmpty(startDate) ? null : LocalDate.parse(startDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));}
+        catch (Exception e) {startDateParsed = null;}
+        try {endDateParsed = StringUtils.isEmpty(endDate) ? null : LocalDate.parse(endDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));}
+        catch (Exception e) {endDateParsed = null;}
+        try {startTimeParsed = StringUtils.isEmpty(startTime) ? null : LocalTime.parse(startTime, DateTimeFormatter.ofPattern("HH:mm"));}
+        catch (Exception e) {startTimeParsed = null;}
+        try {endTimeParsed = StringUtils.isEmpty(endTime) ? null : LocalTime.parse(endTime, DateTimeFormatter.ofPattern("HH:mm"));}
+        catch (Exception e) {endTimeParsed = null;}
+        //Сделать парсинг или валидацию тут и где кривые переменные - сделать их null
+        return super.getBetween(startDateParsed, startTimeParsed, endDateParsed, endTimeParsed);
     }
 }
