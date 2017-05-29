@@ -28,7 +28,6 @@
         <logout logout-success-url="/login"/>
         <csrf disabled="true"/>
     </http>
-
     <authentication-manager>
         <authentication-provider user-service-ref="userService">
             <!--
