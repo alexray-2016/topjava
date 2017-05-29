@@ -19,7 +19,7 @@
     <bean class="ru.javawebinar.topjava.web.json.JacksonObjectMapper" id="objectMapper" factory-method="getMapper"/>
 
     <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource"
-          p:cacheSeconds="60"
+          p:cacheSeconds="6"
           p:defaultEncoding="UTF-8">
         <property name="basenames">
             <list>
