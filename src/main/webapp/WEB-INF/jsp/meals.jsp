@@ -1,5 +1,6 @@
 <%--                <td><a href="meals/update?id=${meal.id}"><spring:message code="common.update"/></a></td>
                 <td><a href="meals/delete?id=${meal.id}"><spring:message code="common.delete"/></a></td>--%>
+<%@ page session="false" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
@@ -13,12 +14,10 @@
 <jsp:include page="fragments/bodyHeader.jsp"/>
 <div class="jumbotron">
     <div class="container">
-        <div class="shadow">
-            <h3><spring:message code="meals.title"/></h3>
+        <h3><spring:message code="meals.title"/></h3>
 
-            <div class="view-box">
-                <div class="row">
-                    <div class="col-sm-7">
+        <div class="row">
+            <div class="col-sm-7">
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <form class="form-horizontal" id="filter">
@@ -63,43 +62,41 @@
                         </a>
                     </div>
                 </div>
-                    </div>
-                </div>
-                <a class="btn btn-primary" onclick="add()">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                    <spring:message code="common.add"/>
-                </a>
-                <table class="table table-striped display" id="datatable">
-                    <thead>
-                    <tr>
-                        <th><spring:message code="meals.dateTime"/></th>
-                        <th><spring:message code="meals.description"/></th>
-                        <th><spring:message code="meals.calories"/></th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <c:forEach items="${meals}" var="meal">
-                        <jsp:useBean id="meal" scope="page" type="ru.javawebinar.topjava.to.MealWithExceed"/>
-                        <tr class="${meal.exceed ? 'exceeded' : 'normal'}">
-                            <td>
-                                    <%--<fmt:parseDate value="${meal.dateTime}" pattern="y-M-dd'T'H:m" var="parsedDate"/>--%>
-                                    <%--<fmt:formatDate value="${parsedDate}" pattern="yyyy.MM.dd HH:mm" />--%>
-                                    ${fn:formatDateTime(meal.dateTime)}
-                            </td>
-                            <td>${meal.description}</td>
-                            <td>${meal.calories}</td>
-                            <td><a>
-                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                            </a></td>
-                            <td><a onclick="deleteRow(${meal.id})">
-                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                            </a></td>
-                        </tr>
-                    </c:forEach>
-                </table>
             </div>
         </div>
+        <a class="btn btn-primary" onclick="add()">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            <spring:message code="common.add"/>
+        </a>
+        <table class="table table-striped display" id="datatable">
+            <thead>
+            <tr>
+                <th><spring:message code="meals.dateTime"/></th>
+                <th><spring:message code="meals.description"/></th>
+                <th><spring:message code="meals.calories"/></th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <c:forEach items="${meals}" var="meal">
+                <jsp:useBean id="meal" scope="page" type="ru.javawebinar.topjava.to.MealWithExceed"/>
+                <tr class="${meal.exceed ? 'exceeded' : 'normal'}">
+                    <td>
+                            <%--<fmt:parseDate value="${meal.dateTime}" pattern="y-M-dd'T'H:m" var="parsedDate"/>--%>
+                            <%--<fmt:formatDate value="${parsedDate}" pattern="yyyy.MM.dd HH:mm" />--%>
+                            ${fn:formatDateTime(meal.dateTime)}
+                    </td>
+                    <td>${meal.description}</td>
+                    <td>${meal.calories}</td>
+                    <td><a>
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                    </a></td>
+                    <td><a onclick="deleteRow(${meal.id})">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    </a></td>
+                </tr>
+            </c:forEach>
+        </table>
     </div>
 </div>
     <table border="1" cellpadding="8" cellspacing="0">
