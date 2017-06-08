@@ -40,10 +40,10 @@
         <br/>
         <p>
             <a class="btn btn-lg btn-success" href="register"><spring:message code="app.register"/> &raquo;</a>
-            <button type="submit" class="btn btn-lg btn-primary" onclick="setCredentials('user@yandex.ru', 'password')">
+            <button type="submit" class="btn btn-lg btn-primary" onclick="setCredentials('user@yandex.ru', '$2a$10$Sh0ZD2NFrzRRJJEKEWn8l.92ROEuzlVyzB9SV1AM8fdluPR0aC1ni')">
                 <spring:message code="app.enter"/> User
             </button>
-            <button type="submit" class="btn btn-lg btn-primary" onclick="setCredentials('admin@gmail.com', 'admin')">
+            <button type="submit" class="btn btn-lg btn-primary" onclick="setCredentials('admin@gmail.com', '$2a$10$WejOLxVuXRpOgr4IlzQJ.eT4UcukNqHlAiOVZj1P/nmc8WbpMkiju')">
                 <spring:message code="app.enter"/> Admin
             </button>
         </p>

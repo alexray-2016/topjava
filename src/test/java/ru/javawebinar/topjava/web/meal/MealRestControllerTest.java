@@ -10,6 +10,7 @@ import ru.javawebinar.topjava.util.MealsUtil;
 import ru.javawebinar.topjava.web.AbstractControllerTest;
 import ru.javawebinar.topjava.web.json.JsonUtil;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
@@ -95,6 +96,17 @@ public class MealRestControllerTest extends AbstractControllerTest {
 
         MATCHER.assertEquals(created, returned);
         MATCHER.assertCollectionEquals(Arrays.asList(ADMIN_MEAL2, created, ADMIN_MEAL1), service.getAll(ADMIN_ID));
+    }
+
+    @Test
+    public void testValidation() throws Exception {
+        Meal created = new Meal(null, LocalDateTime.now(), "", 2000);
+        created.setUser(USER);
+        mockMvc.perform(post(REST_URL)
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(JsonUtil.writeValue(created))
+        .with(userHttpBasic(USER)))
+                .andExpect(status().isUnprocessableEntity());
     }
 
     @Test
